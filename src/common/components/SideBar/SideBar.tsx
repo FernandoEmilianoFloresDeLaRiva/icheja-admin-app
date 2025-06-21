@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import SideBarIcon from "./SideBarIcon";
 import { theme } from "../../../core/config/theme";
 import logo from "../../../assets/images/logo.png";
@@ -10,24 +11,31 @@ import userIcon from "../../../assets/images/user-circle.png";
 import settingsIcon from "../../../assets/images/settings.png";
 
 function SideBar() {
+  const [location, setLocation] = useLocation();
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
   const navigationItems = [
-    { iconName: "home", label: "Inicio", active: true, icon: homeIcon },
-    { iconName: "user", label: "Perfil", active: false, icon: userIcon },
+    { iconName: "home", label: "Inicio", path: "/profile", icon: homeIcon },
+    { iconName: "user", label: "Perfil", path: "/register-student", icon: userIcon },
     {
       iconName: "book",
       label: "Ejercicios",
-      active: false,
+      path: "/exercises",
       icon: exerciseIcon,
     },
     {
       iconName: "file",
       label: "Progreso",
-      active: false,
+      path: "/progress",
       icon: statisticsIcon,
     },
-    { iconName: "settings", label: "Mochila", active: false, icon: bagIcon },
+    { iconName: "settings", label: "Mochila", path: "/backpack", icon: bagIcon },
   ];
-  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const handleNavigation = (path: string) => {
+    setLocation(path);
+  };
+
   return (
     <div
       className={`fixed left-5 top-4 bottom-4 z-50 text-white transition-all duration-300 ease-in-out  ${
@@ -55,8 +63,9 @@ function SideBar() {
         {navigationItems.map((item, index) => (
           <button
             key={index}
+            onClick={() => handleNavigation(item.path)}
             className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 hover:cursor-pointer ${
-              item.active
+              location === item.path
                 ? "bg-white/20 text-white shadow-lg"
                 : "hover:bg-white/10 text-pink-100 hover:text-white"
             }`}
