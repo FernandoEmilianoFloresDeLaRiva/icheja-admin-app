@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from '../../../core/config/axios';
 import type { StudentsListResponse, StudentsListParams } from "../types/student.types.tsx";
-import { API_BASE_URL, STUDENTS_LIST_URL } from "../../../core/config/consts";
+import { STUDENTS_LIST_URL } from "../../../core/config/consts";
 
 export const getStudentsList = async (params: StudentsListParams = {}): Promise<StudentsListResponse> => {
   try {
@@ -14,9 +14,9 @@ export const getStudentsList = async (params: StudentsListParams = {}): Promise<
     };
     
     console.log('Parámetros:', defaultParams);
-    console.log('URL completa:', API_BASE_URL + STUDENTS_LIST_URL);
+    console.log('URL completa:', STUDENTS_LIST_URL);
     
-    const response = await axios.get(API_BASE_URL + STUDENTS_LIST_URL, {
+    const response = await axios.get(STUDENTS_LIST_URL, {
       params: defaultParams
     });
     

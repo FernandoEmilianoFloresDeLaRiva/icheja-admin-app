@@ -118,7 +118,7 @@ export default function StudentsList() {
         <Grid size={12} sx={{ mt: 3 }}>
           <div className="bg-gray-100 rounded-lg p-6">
             <Grid container spacing={3}>
-              <Grid size={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <div className="text-center">
                   <div className="text-3xl font-bold" style={{ color: theme.colors.primary.pink }}>
                     {students.length}
@@ -126,7 +126,7 @@ export default function StudentsList() {
                   <div className="text-gray-600">Total de Estudiantes</div>
                 </div>
               </Grid>
-              <Grid size={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <div className="text-center">
                   <div className="text-3xl font-bold" style={{ color: theme.colors.primary.turquoise }}>
                     {students.filter(s => s.person_id.sex === 'M').length}
@@ -134,7 +134,7 @@ export default function StudentsList() {
                   <div className="text-gray-600">Estudiantes Masculinos</div>
                 </div>
               </Grid>
-              <Grid size={4}>
+              <Grid size={{ xs: 12, md: 4 }}>
                 <div className="text-center">
                   <div className="text-3xl font-bold" style={{ color: theme.colors.primary.pink }}>
                     {students.filter(s => s.person_id.sex === 'F').length}

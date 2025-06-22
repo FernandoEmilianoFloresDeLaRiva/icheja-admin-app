@@ -8,25 +8,37 @@ interface SideBarIconProps {
 
 export default function SideBarIcon({
   iconName,
-  size = 20,
+  size = 100,
   logoSrc,
   isCollapsed,
   altText = "Icon",
 }: SideBarIconProps) {
   return (
-    <div
-      className="rounded flex gap-4 items-center text-xs font-bold"
-      style={{ width: `${size}px`, height: `${size}px` }}
-    >
-      <img
-        src={logoSrc}
-        alt={altText}
-        width={size}
-        height={size}
-        className="object-contain "
-      />
+    <div className="rounded flex items-center justify-center text-xs font-bold">
+      <div 
+        style={{ 
+          width: size, 
+          height: size, 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          flexShrink: 0
+        }}
+      >
+        <img
+          src={logoSrc}
+          alt={altText}
+          style={{ 
+            width: size, 
+            height: size, 
+            objectFit: 'contain',
+            maxWidth: '100%',
+            maxHeight: '100%'
+          }}
+        />
+      </div>
       {!isCollapsed && iconName && iconName.trim() !== "" && (
-        <p>{iconName?.toUpperCase()}</p>
+        <p className="ml-3">{iconName?.toUpperCase()}</p>
       )}
     </div>
   );

@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from '../../../core/config/axios';
 import type { StudentFormData, StudentResponse } from "../types/student.types.tsx";
-import { API_BASE_URL, REGISTER_STUDENT_URL } from "../../../core/config/consts";
+import { REGISTER_STUDENT_URL } from "../../../core/config/consts";
 import { saveStudentToStorage, clearLatestStudent } from "./studentStorage";
 
 export const registerStudent = async (formData: StudentFormData): Promise<StudentResponse> => {
   try {
-    const response = await axios.post(API_BASE_URL + REGISTER_STUDENT_URL, formData);    
+    const response = await axios.post(REGISTER_STUDENT_URL, formData);    
     clearLatestStudent();
     saveStudentToStorage(formData);
     return response.data;
@@ -20,7 +20,6 @@ export const registerStudent = async (formData: StudentFormData): Promise<Studen
       }
     } else {
       console.error('No es un error de Axios');
-      console.error('Error cmo objeto:', Object.getOwnPropertyNames(error));
     }
     throw new Error('Error inesperado al registrar el estudiante');
   }

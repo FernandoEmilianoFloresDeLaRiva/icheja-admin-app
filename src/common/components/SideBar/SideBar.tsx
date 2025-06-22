@@ -3,33 +3,32 @@ import { useLocation } from "wouter";
 import SideBarIcon from "./SideBarIcon";
 import { theme } from "../../../core/config/theme";
 import logo from "../../../assets/images/logo.png";
-import homeIcon from "../../../assets/images/home.png";
-import bagIcon from "../../../assets/images/bag-icon.png";
-import exerciseIcon from "../../../assets/images/exercise.png";
-import statisticsIcon from "../../../assets/images/statistics.png";
-import userIcon from "../../../assets/images/user-circle.png";
 import settingsIcon from "../../../assets/images/settings.png";
+import addStudent from "../../../assets/images/add-student.png";
+import home from "../../../assets/images/home.png";
+import profile from "../../../assets/images/profile.png";
 
 function SideBar() {
   const [location, setLocation] = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const navigationItems = [
-    { iconName: "user", label: "Inicio", path: "/profile", icon: userIcon },
-    { iconName: "home", label: "Perfil", path: "/register-student", icon: homeIcon },
-    {
-      iconName: "book",
-      label: "Ejercicios",
-      path: "/students-list",
-      icon: exerciseIcon,
+    { iconName: "home", 
+      label: "Inicio", 
+      path: "/students-list", 
+      icon: home },
+    { 
+      iconName: "profile",
+      label: "Perfil",
+      path: "/profile",
+      icon: profile,
     },
-    {
-      iconName: "file",
-      label: "Progreso",
-      path: "/progress",
-      icon: statisticsIcon,
-    },
-    { iconName: "settings", label: "Mochila", path: "/backpack", icon: bagIcon },
+    { 
+      iconName: "home", 
+      label: "Registrar estudiante", 
+      path: "/register-student", 
+      icon: addStudent }
+  
   ];
 
   const handleNavigation = (path: string) => {
@@ -64,7 +63,9 @@ function SideBar() {
           <button
             key={index}
             onClick={() => handleNavigation(item.path)}
-            className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 hover:cursor-pointer ${
+            className={`w-full flex items-center p-3 rounded-lg transition-all duration-200 hover:cursor-pointer ${
+              isCollapsed ? 'justify-center' : 'justify-start'
+            } ${
               location === item.path
                 ? "bg-white/20 text-white shadow-lg"
                 : "hover:bg-white/10 text-pink-100 hover:text-white"
@@ -72,7 +73,7 @@ function SideBar() {
           >
             <SideBarIcon
               iconName={item.label}
-              size={20}
+              size={24}
               isCollapsed={isCollapsed}
               logoSrc={item.icon}
             />
@@ -80,11 +81,10 @@ function SideBar() {
         ))}
       </nav>
 
-      {/* Bottom Section */}
-      <div className="p-4 mb-4 flex items-center justify-center">
+      <div className={`p-4 mb-4 flex items-center ${isCollapsed ? 'justify-center' : 'justify-start'}`}>
         <SideBarIcon
           altText="settings"
-          size={20}
+          size={25}
           logoSrc={settingsIcon}
           isCollapsed={isCollapsed}
         />
