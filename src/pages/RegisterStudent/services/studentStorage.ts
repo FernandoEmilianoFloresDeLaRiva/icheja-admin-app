@@ -1,7 +1,5 @@
-import type { StudentFormData, StudentLocalData } from "../types/student.types.tsx";
-
-const STORAGE_KEY = 'registered_students';
-const LATEST_STUDENT_KEY = 'latest_student';
+import { STORAGE_KEY, LATEST_STUDENT_KEY, MAX_STUDENTS } from "../../../core/config/consts.ts";
+import type { StudentFormData, StudentLocalData } from "../types/student.types.tsx";  
 
 export const saveStudentToStorage = (studentData: StudentFormData): StudentLocalData => {
   const newStudent: StudentLocalData = {
@@ -14,7 +12,13 @@ export const saveStudentToStorage = (studentData: StudentFormData): StudentLocal
   
   const students = getStudentsFromStorage();
   students.push(newStudent);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+  
+  if (students.length > MAX_STUDENTS) {
+    const studentsToKeep = students.slice(-MAX_STUDENTS);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(studentsToKeep));
+  } else {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+  }
   
   return newStudent;
 };
@@ -46,4 +50,13 @@ export const clearStudentsFromStorage = (): void => {
 
 export const clearLatestStudent = (): void => {
   localStorage.removeItem(LATEST_STUDENT_KEY);
+};
+
+export const cleanupStorageIfNeeded = (): void => {
+  const students = getStudentsFromStorage();
+  if (students.length > MAX_STUDENTS) {
+    const studentsToKeep = students.slice(-MAX_STUDENTS);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(studentsToKeep));
+    console.log(`Storage limpiado: se mantuvieron los últimos ${MAX_STUDENTS} estudiantes`);
+  }
 }; 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Grid from '@mui/material/Grid';
 import StudentRegisterHeader from "./StudentRegisterHeader";
 import StudentRegisterForm from "./StudentRegisterForm";
 import StudentRegisterSuccess from "./StudentRegisterSuccess";
@@ -31,23 +32,29 @@ export default function StudentRegisterContent() {
 
   if (studentResponse) {
     return (
-      <div className="container mx-auto px-4 py-6">
-        <StudentRegisterSuccess 
-          student={studentResponse} 
-          onNewRegistration={handleNewRegistration}
-        />
-      </div>
+      <Grid container spacing={2} sx={{ py: 3 }}>
+        <Grid size={12}>
+          <StudentRegisterSuccess 
+            student={studentResponse} 
+            onNewRegistration={handleNewRegistration}
+          />
+        </Grid>
+      </Grid>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <StudentRegisterHeader />
-      <StudentRegisterForm 
-        onSubmit={handleSubmit}
-        isSubmitting={isSubmitting}
-        error={error}
-      />
-    </div>
+    <Grid container spacing={2} sx={{ py: 3 }}>
+      <Grid size={12}>
+        <StudentRegisterHeader />
+      </Grid>
+      <Grid size={12}>
+        <StudentRegisterForm 
+          onSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
+          error={error}
+        />
+      </Grid>
+    </Grid>
   );
 }

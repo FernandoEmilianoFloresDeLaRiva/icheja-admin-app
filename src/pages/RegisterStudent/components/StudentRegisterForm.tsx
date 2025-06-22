@@ -109,9 +109,13 @@ export default function StudentRegisterForm({
   return (
     <form onSubmit={handleSubmit}>
       {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
+        <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid size={12}>
+            <Alert severity="error">
+              {error}
+            </Alert>
+          </Grid>
+        </Grid>
       )}
 
       <Grid container spacing={3}>
@@ -288,26 +292,30 @@ export default function StudentRegisterForm({
         </Grid>
       </Grid>
 
-      <div className="flex justify-end gap-4 mt-6">
-        <button
-          type="button"
-          onClick={handleClearForm}
-          className="px-6 py-2 border-2 font-bold rounded-lg hover:bg-gray-50 transition-colors"
-          style={{ borderColor: theme.colors.primary.pink, color: theme.colors.primary.pink }}
-          disabled={isSubmitting}
-        >
-          Limpiar Formulario
-        </button>
-        <button
-          type="submit"
-          className="px-8 py-2 text-white font-bold rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
-          style={{ backgroundColor: theme.colors.primary.pink }}
-          disabled={isSubmitting}
-        >
-          {isSubmitting && <CircularProgress size={20} color="inherit" />}
-          {isSubmitting ? 'Registrando...' : 'Registrar Estudiante'}
-        </button>
-      </div>
+      <Grid container spacing={2} sx={{ mt: 3 }}>
+        <Grid size={12}>
+          <div className="flex justify-end gap-4">
+            <button
+              type="button"
+              onClick={handleClearForm}
+              className="px-6 py-2 border-2 font-bold rounded-lg hover:bg-gray-50 transition-colors"
+              style={{ borderColor: theme.colors.primary.pink, color: theme.colors.primary.pink }}
+              disabled={isSubmitting}
+            >
+              Limpiar Formulario
+            </button>
+            <button
+              type="submit"
+              className="px-8 py-2 text-white font-bold rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
+              style={{ backgroundColor: theme.colors.primary.pink }}
+              disabled={isSubmitting}
+            >
+              {isSubmitting && <CircularProgress size={20} color="inherit" />}
+              {isSubmitting ? 'Registrando...' : 'Registrar Estudiante'}
+            </button>
+          </div>
+        </Grid>
+      </Grid>
     </form>
   );
 }

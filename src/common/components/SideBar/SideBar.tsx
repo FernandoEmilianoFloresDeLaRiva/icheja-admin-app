@@ -15,12 +15,12 @@ function SideBar() {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const navigationItems = [
-    { iconName: "home", label: "Inicio", path: "/profile", icon: homeIcon },
-    { iconName: "user", label: "Perfil", path: "/register-student", icon: userIcon },
+    { iconName: "user", label: "Inicio", path: "/profile", icon: userIcon },
+    { iconName: "home", label: "Perfil", path: "/register-student", icon: homeIcon },
     {
       iconName: "book",
       label: "Ejercicios",
-      path: "/exercises",
+      path: "/students-list",
       icon: exerciseIcon,
     },
     {

@@ -3,7 +3,6 @@ import Grid from "@mui/material/Grid";
 import type { UserProfile } from "../../types/profile.types";
 
 import { PersonalInfoCard } from "./cards/PersonalInfoCard";
-import { HorariosCard } from "./cards/HorariosCard";
 import { UbicacionCard } from "./cards/UbicacionCard";
 import { CelulaCard } from "./cards/CelulaCard";
 

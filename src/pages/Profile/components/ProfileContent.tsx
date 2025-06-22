@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Grid from '@mui/material/Grid';
 import ProfileHeader from "./ProfileHeader";
 import type { UserProfile } from '../../types/profile.types';
 import ProfileForm from './ProfileForm';
@@ -49,18 +50,22 @@ export default function ProfileContent() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <ProfileHeader 
-        profile={profile} 
-        onEdit={handleEdit}
-        isEditing={isEditing}
-      />
-      <ProfileForm 
-        profile={profile}
-        isEditing={isEditing}
-        onSave={handleSave}
-        onCancel={handleCancel}
-      />
-    </div>
+    <Grid container spacing={2} sx={{ py: 3 }}>
+      <Grid size={12}>
+        <ProfileHeader 
+          profile={profile} 
+          onEdit={handleEdit}
+          isEditing={isEditing}
+        />
+      </Grid>
+      <Grid size={12}>
+        <ProfileForm 
+          profile={profile}
+          isEditing={isEditing}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
+      </Grid>
+    </Grid>
   );
 }
