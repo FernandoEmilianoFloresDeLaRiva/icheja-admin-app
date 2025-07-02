@@ -12,6 +12,7 @@ export interface StudentFormData {
   asentamiento: string;
   office_code: string;
   educator_id: number;
+  disability_name: string;
 }
 
 export interface StudentResponse {
@@ -39,4 +40,5 @@ export interface StudentLocalData {
   office_code: string;
   educator_id: number;
   created_at: string;
+  disability_name: string;
 } 

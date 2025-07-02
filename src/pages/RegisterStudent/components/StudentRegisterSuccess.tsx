@@ -5,6 +5,7 @@ import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import type { StudentResponse, StudentLocalData } from "../types/student.types.tsx";
 import { getStudentsFromStorage, getLatestStudent, cleanupStorageIfNeeded } from "../services/studentStorage";
+import { printStudentQR } from '../../../common/utils/printQR.tsx';
 
 interface StudentRegisterSuccessProps {
   student: StudentResponse;
@@ -137,7 +138,6 @@ export default function StudentRegisterSuccess({
       `);
       printWindow.document.close();
       
-      // Si no hay imagen QR, imprimir inmediatamente
       if (!qrImageUrl) {
         setTimeout(() => {
           printWindow.print();
@@ -161,7 +161,6 @@ export default function StudentRegisterSuccess({
 
   return (
     <Grid container spacing={3}>
-      {/* Header de éxito */}
       <Grid size={12}>
         <div className="text-center">
           <div 
@@ -198,16 +197,10 @@ export default function StudentRegisterSuccess({
           <div className="space-y-3">
             <div className="flex justify-between">
               <span className="font-medium text-gray-600">Nombre:</span>
-              <span className="text-gray-900">{latestStudent.name} {latestStudent.father_lastname} {latestStudent.mother_lastname}</span>
-            </div>
-            
-            <div className="flex justify-between">
-              <span className="font-medium text-gray-600">ID de Estudiante:</span>
               <span 
-                className="text-white px-3 py-1 rounded font-bold"
-                style={{ backgroundColor: theme.colors.primary.pink }}
-              >
-                {latestStudent.id}
+              className="text-white px-3 py-1 rounded font-bold"
+              style={{ backgroundColor: theme.colors.primary.pink }}>
+                {latestStudent.name} {latestStudent.father_lastname} {latestStudent.mother_lastname}
               </span>
             </div>
             
@@ -264,6 +257,16 @@ export default function StudentRegisterSuccess({
                 {new Date(latestStudent.created_at).toLocaleDateString('es-MX')}
               </span>
             </div>
+
+            {latestStudent.disability_name && (
+            <div className="flex justify-between">
+              <span className="font-medium text-gray-600">Discapacidad:</span>
+              <span className="text-gray-900">
+                  {latestStudent.disability_name}
+                </span>
+              </div>
+            )}
+
           </div>
         </div>
       </Grid>
@@ -315,7 +318,14 @@ export default function StudentRegisterSuccess({
               </button>
               
               <button
-                onClick={handlePrintQR}
+                onClick={() => printStudentQR({
+                  name: latestStudent.name,
+                  father_lastname: latestStudent.father_lastname,
+                  id: latestStudent.id,
+                  curp: latestStudent.curp,
+                  ine_number: latestStudent.ine_number,
+                  qrImageUrl: student.data.qrImage,
+                })}
                 className="px-4 py-2 border-2 font-bold rounded-lg hover:bg-gray-50 transition-colors"
                 style={{ borderColor: theme.colors.primary.pink, color: theme.colors.primary.pink }}
               >

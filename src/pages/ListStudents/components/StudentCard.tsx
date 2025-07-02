@@ -1,6 +1,7 @@
 import { theme } from "../../../core/config/theme";
 import Grid from '@mui/material/Grid';
 import type { StudentFromAPI } from "../types/student.types.tsx";
+import { printStudentQR } from "../../../common/utils/printQR.tsx";
 
 interface StudentCardProps {
   student: StudentFromAPI;
@@ -40,16 +41,15 @@ export default function StudentCard({ student, onDownloadQR }: StudentCardProps)
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-4">
           <div 
-            className="w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold"
+            className="w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold min-w-16 min-h-16"
             style={{ backgroundColor: getAvatarColor() }}
           >
             {getInitials()}
           </div>
           <div>
-            <h3 className="text-xl font-bold text-gray-900">
+            <h3 className="font-bold text-gray-900">
               {person_id.name} {person_id.father_lastname} {person_id.mother_lastname}
             </h3>
-            <p className="text-gray-600">ID: {student.id}</p>
             <p className="text-sm text-gray-500">
               {person_id.sex === 'M' ? 'Masculino' : 'Femenino'} • {new Date(person_id.born_date).toLocaleDateString('es-MX')}
             </p>
@@ -66,8 +66,8 @@ export default function StudentCard({ student, onDownloadQR }: StudentCardProps)
             </div>
             
             <div>
-              <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">INE</div>
-              <div className="text-sm text-gray-900 font-mono">{person_id.ine_number}</div>
+              <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Código Postal</div>
+              <div className="text-sm text-gray-900">{person_id.postal_code}</div>
             </div>
             
             <div>
@@ -85,8 +85,8 @@ export default function StudentCard({ student, onDownloadQR }: StudentCardProps)
         <Grid size={{ xs: 12, md: 6 }}>
           <div className="space-y-3">
             <div>
-              <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Código Postal</div>
-              <div className="text-sm text-gray-900">{person_id.postal_code}</div>
+              <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">INE</div>
+              <div className="text-sm text-gray-900 font-mono">{person_id.ine_number}</div>
             </div>
             
             <div>
@@ -98,25 +98,43 @@ export default function StudentCard({ student, onDownloadQR }: StudentCardProps)
               <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Código Oficina</div>
               <div className="text-sm text-gray-900">{person_id.office_code}</div>
             </div>
-            
             <div>
-              <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Educador ID</div>
-              <div className="text-sm text-gray-900">{student.educator_id}</div>
+              <div className="text-xs font-medium text-gray-500 uppercase tracking-wide">Discapacidad</div>
+              <div className="text-sm text-gray-900">{student.disability_name}</div>
             </div>
           </div>
         </Grid>
       </Grid>
 
       {qr_path && (
-        <div className="flex justify-center">
-          <button
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid size={{ xs: 12, md: 6 }}>
+            <button
             onClick={handleDownloadQR}
             className="px-4 py-2 text-white font-bold rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2 text-sm"
             style={{ backgroundColor: theme.colors.primary.turquoise }}
-          >
-            📱 Descargar QR
-          </button>
-        </div>
+            >
+              📱 Descargar QR
+            </button>
+          </Grid>
+          
+          <Grid size={{ xs: 12, md: 6 }}> 
+            <button
+            onClick={() => printStudentQR({
+              name: student.person_id.name,
+              father_lastname: student.person_id.father_lastname,
+              id: student.id,
+              curp: student.person_id.curp,
+              ine_number: student.person_id.ine_number,
+              qrImageUrl: student.qr_path,
+            })}
+            className="px-4 py-2 border-2 font-bold rounded-lg hover:bg-gray-50 transition-colors text-sm"
+            style={{ borderColor: theme.colors.primary.pink, color: theme.colors.primary.pink }}
+            >
+              🖨️ Imprimir QR
+            </button>
+          </Grid>
+        </Grid>
       )}
     </div>
   );
