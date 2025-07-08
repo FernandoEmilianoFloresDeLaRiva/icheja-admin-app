@@ -9,6 +9,9 @@ import InputLabel from '@mui/material/InputLabel';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import type { StudentFormData } from "../types/student.types.tsx";
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { pink } from '@mui/material/colors';
 
 interface StudentRegisterFormProps {
   onSubmit: (formData: StudentFormData) => void;
@@ -29,7 +32,8 @@ const initialFormData: StudentFormData = {
   postal_code: '',
   asentamiento: '',
   office_code: '',
-  educator_id: 1
+  educator_id: 1,
+  disability_name: ''
 };
 
 const FormCard = ({ title, children }: { title: string, children: React.ReactNode }) => (
@@ -76,6 +80,7 @@ export default function StudentRegisterForm({
     
     if (!formData.name.trim()) errors.name = 'El nombre es requerido';
     if (!formData.father_lastname.trim()) errors.father_lastname = 'El apellido paterno es requerido';
+    if (!formData.mother_lastname.trim()) errors.mother_lastname = 'El apellido materno es requerido';
     if (!formData.born_date) errors.born_date = 'La fecha de nacimiento es requerida';
     if (!formData.sex) errors.sex = 'El género es requerido';
     if (!formData.curp.trim()) errors.curp = 'El CURP es requerido';
@@ -85,7 +90,7 @@ export default function StudentRegisterForm({
     if (!formData.postal_code.trim()) errors.postal_code = 'El código postal es requerido';
     if (!formData.asentamiento.trim()) errors.asentamiento = 'El asentamiento es requerido';
     if (!formData.office_code.trim()) errors.office_code = 'El código de oficina es requerido';
-    
+
     if (formData.curp && formData.curp.length !== 18) {
       errors.curp = 'El CURP debe tener 18 caracteres';
     }
@@ -222,7 +227,7 @@ export default function StudentRegisterForm({
         <Grid size={{ xs: 12, md: 6 }}>
           <FormCard title="Información de Dirección">
             <Grid container spacing={2}>
-              <Grid size={4}>
+              <Grid size={6}>
                 <TextField
                   fullWidth
                   label="Código Postal *"
@@ -235,8 +240,21 @@ export default function StudentRegisterForm({
                   disabled={isSubmitting}
                 />
               </Grid>
+
+              <Grid size={6}>
+                <TextField
+                  fullWidth
+                  label="Código de Oficina *"
+                  value={formData.office_code}
+                  onChange={(e) => handleChange('office_code', e.target.value)}
+                  variant="outlined"
+                  error={!!formErrors.office_code}
+                  helperText={formErrors.office_code}
+                  disabled={isSubmitting}
+                />
+              </Grid>
               
-              <Grid size={8}>
+              <Grid size={4}>
                 <TextField
                   fullWidth
                   label="Estado *"
@@ -249,7 +267,7 @@ export default function StudentRegisterForm({
                 />
               </Grid>
               
-              <Grid size={6}>
+              <Grid size={4}>
                 <TextField
                   fullWidth
                   label="Municipio *"
@@ -262,7 +280,7 @@ export default function StudentRegisterForm({
                 />
               </Grid>
               
-              <Grid size={6}>
+              <Grid size={4}>
                 <TextField
                   fullWidth
                   label="Asentamiento *"
@@ -274,17 +292,28 @@ export default function StudentRegisterForm({
                   disabled={isSubmitting}
                 />
               </Grid>
-              
+            
+            </Grid>
+          </FormCard>
+
+          <FormCard title="Información de Discapacidad">
+            <Grid container spacing={2}>
               <Grid size={12}>
-                <TextField
-                  fullWidth
-                  label="Código de Oficina *"
-                  value={formData.office_code}
-                  onChange={(e) => handleChange('office_code', e.target.value)}
-                  variant="outlined"
-                  error={!!formErrors.office_code}
-                  helperText={formErrors.office_code}
-                  disabled={isSubmitting}
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.disability_name === 'Sordomudo'}
+                      onChange={(_, checked) => handleChange('disability_name', checked ? 'Sordomudo' : '')}
+                      disabled={isSubmitting}
+                      sx={{
+                        color: pink[800],
+                        '&.Mui-checked': {
+                          color: pink[600],
+                        },
+                      }}
+                    />
+                  }
+                  label="Sordomudo"
                 />
               </Grid>
             </Grid>

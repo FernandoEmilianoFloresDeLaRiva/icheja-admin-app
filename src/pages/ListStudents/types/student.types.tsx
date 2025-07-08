@@ -1,4 +1,3 @@
-// Para la API de lista de estudiantes
 export interface StudentPerson {
   id: number;
   name: string;
@@ -19,6 +18,7 @@ export interface StudentFromAPI {
   id: number;
   educator_id: number;
   qr_path: string;
+  disability_name: string;
   person_id: StudentPerson;
 }
 
