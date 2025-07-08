@@ -34,6 +34,7 @@ export default function StudentRegisterSuccess({
         
         const latest = getLatestStudent();
         setLatestStudent(latest);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         setErrorStudents(error.message || 'Error al cargar los estudiantes');
       } finally {
@@ -59,92 +60,92 @@ export default function StudentRegisterSuccess({
     }
   };
 
-  const handlePrintQR = () => {
-    const printWindow = window.open('', '_blank');
-    if (printWindow) {
-      const qrImageUrl = student.data.qrImage;
+  // const handlePrintQR = () => {
+  //   const printWindow = window.open('', '_blank');
+  //   if (printWindow) {
+  //     const qrImageUrl = student.data.qrImage;
       
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Código QR - ${latestStudent?.name || 'Estudiante'}</title>
-            <style>
-              body { 
-                margin: 0; 
-                padding: 20px; 
-                font-family: Arial, sans-serif;
-                text-align: center;
-              }
-              .qr-container {
-                max-width: 400px;
-                margin: 0 auto;
-                padding: 20px;
-                border: 2px solid #C90166;
-                border-radius: 10px;
-              }
-              .student-info {
-                margin-bottom: 20px;
-              }
-              .qr-image {
-                max-width: 100%;
-                height: auto;
-                margin: 20px 0;
-              }
-              .qr-image img {
-                max-width: 100%;
-                height: auto;
-                display: block;
-                margin: 0 auto;
-              }
-              @media print {
-                body { 
-                  margin: 0; 
-                  padding: 10px; 
-                }
-                .qr-container {
-                  border: 1px solid #000;
-                  max-width: 100%;
-                }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="qr-container">
-              <div class="student-info">
-                <h2>${latestStudent?.name || 'Estudiante'} ${latestStudent?.father_lastname || ''}</h2>
-                <p><strong>ID:</strong> ${latestStudent?.id || 'N/A'}</p>
-                <p><strong>CURP:</strong> ${latestStudent?.curp || 'N/A'}</p>
-                <p><strong>INE:</strong> ${latestStudent?.ine_number || 'N/A'}</p>
-                <p><strong>Fecha de Registro:</strong> ${new Date(latestStudent?.created_at || Date.now()).toLocaleDateString('es-MX')}</p>
-              </div>
-              <div class="qr-image">
-                ${qrImageUrl ? 
-                  `<img src="${qrImageUrl}" alt="QR Code" onload="window.print()" onerror="alert('Error al cargar la imagen QR'); window.close();" />` :
-                  `<div style="border: 2px dashed #ccc; padding: 40px; margin: 20px 0;">
-                     <p style="margin: 0; color: #666;">QR Code no disponible</p>
-                     <p style="margin: 5px 0; font-size: 12px;">Estudiante: ${latestStudent?.name || 'N/A'} ${latestStudent?.father_lastname || ''}</p>
-                     <p style="margin: 5px 0; font-size: 12px;">CURP: ${latestStudent?.curp || 'N/A'}</p>
-                     <p style="margin: 5px 0; font-size: 12px;">INE: ${latestStudent?.ine_number || 'N/A'}</p>
-                   </div>`
-                }
-              </div>
-            </div>
-            <script>
-              // Si no hay imagen QR, imprimir inmediatamente
-              ${!qrImageUrl ? 'window.print();' : ''}
-            </script>
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
+  //     printWindow.document.write(`
+  //       <html>
+  //         <head>
+  //           <title>Código QR - ${latestStudent?.name || 'Estudiante'}</title>
+  //           <style>
+  //             body { 
+  //               margin: 0; 
+  //               padding: 20px; 
+  //               font-family: Arial, sans-serif;
+  //               text-align: center;
+  //             }
+  //             .qr-container {
+  //               max-width: 400px;
+  //               margin: 0 auto;
+  //               padding: 20px;
+  //               border: 2px solid #C90166;
+  //               border-radius: 10px;
+  //             }
+  //             .student-info {
+  //               margin-bottom: 20px;
+  //             }
+  //             .qr-image {
+  //               max-width: 100%;
+  //               height: auto;
+  //               margin: 20px 0;
+  //             }
+  //             .qr-image img {
+  //               max-width: 100%;
+  //               height: auto;
+  //               display: block;
+  //               margin: 0 auto;
+  //             }
+  //             @media print {
+  //               body { 
+  //                 margin: 0; 
+  //                 padding: 10px; 
+  //               }
+  //               .qr-container {
+  //                 border: 1px solid #000;
+  //                 max-width: 100%;
+  //               }
+  //             }
+  //           </style>
+  //         </head>
+  //         <body>
+  //           <div class="qr-container">
+  //             <div class="student-info">
+  //               <h2>${latestStudent?.name || 'Estudiante'} ${latestStudent?.father_lastname || ''}</h2>
+  //               <p><strong>ID:</strong> ${latestStudent?.id || 'N/A'}</p>
+  //               <p><strong>CURP:</strong> ${latestStudent?.curp || 'N/A'}</p>
+  //               <p><strong>INE:</strong> ${latestStudent?.ine_number || 'N/A'}</p>
+  //               <p><strong>Fecha de Registro:</strong> ${new Date(latestStudent?.created_at || Date.now()).toLocaleDateString('es-MX')}</p>
+  //             </div>
+  //             <div class="qr-image">
+  //               ${qrImageUrl ? 
+  //                 `<img src="${qrImageUrl}" alt="QR Code" onload="window.print()" onerror="alert('Error al cargar la imagen QR'); window.close();" />` :
+  //                 `<div style="border: 2px dashed #ccc; padding: 40px; margin: 20px 0;">
+  //                    <p style="margin: 0; color: #666;">QR Code no disponible</p>
+  //                    <p style="margin: 5px 0; font-size: 12px;">Estudiante: ${latestStudent?.name || 'N/A'} ${latestStudent?.father_lastname || ''}</p>
+  //                    <p style="margin: 5px 0; font-size: 12px;">CURP: ${latestStudent?.curp || 'N/A'}</p>
+  //                    <p style="margin: 5px 0; font-size: 12px;">INE: ${latestStudent?.ine_number || 'N/A'}</p>
+  //                  </div>`
+  //               }
+  //             </div>
+  //           </div>
+  //           <script>
+  //             // Si no hay imagen QR, imprimir inmediatamente
+  //             ${!qrImageUrl ? 'window.print();' : ''}
+  //           </script>
+  //         </body>
+  //       </html>
+  //     `);
+  //     printWindow.document.close();
       
-      if (!qrImageUrl) {
-        setTimeout(() => {
-          printWindow.print();
-        }, 100);
-      }
-    }
-  };
+  //     if (!qrImageUrl) {
+  //       setTimeout(() => {
+  //         printWindow.print();
+  //       }, 100);
+  //     }
+  //   }
+  // };
 
   if (!latestStudent) {
     return (
